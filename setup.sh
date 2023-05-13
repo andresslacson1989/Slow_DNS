@@ -11,7 +11,7 @@ if [ "$(systemd-detect-virt)" == "openvz" ]; then
 fi
 
 echo "installing SSH "
-wget https://raw.githubusercontent.com/andresslacson1989/autoscript-ssh-slowdns/main/ssh.sh && chmod +x ssh.sh && ./ssh.sh
+wget https://github.com/andresslacson1989/Slow_DNS/raw/master/ssh.sh && chmod +x ssh.sh && ./ssh.sh
 cd
 echo "installing Slow DNS "
-wget https://raw.githubusercontent.com/andresslacson1989/autoscript-ssh-slowdns/main/slowdns.sh && chmod +x slowdns.sh && ./slowdns.sh
+wget https://github.com/andresslacson1989/Slow_DNS/raw/master/slowdns.sh && chmod +x slowdns.sh && ./slowdns.sh

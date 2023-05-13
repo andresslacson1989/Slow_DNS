@@ -14,7 +14,7 @@ cd
 rm -rf /root/nsdomain
 rm nsdomain
 
-IP=$(wget -qO- ifconfig.me/ip);
+IP=$(curl -s https://api.ipify.org)
 
 #input nameserver manual to cloudflare
 domain="https://paid.bytesph.com"

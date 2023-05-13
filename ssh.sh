@@ -299,12 +299,12 @@ wget -O renew "https://gitlab.com/hidessh/baru/-/raw/main/renew.sh"
 wget -O autokill "https://gitlab.com/hidessh/baru/-/raw/main/autokill.sh"
 wget -O ceklim "https://gitlab.com/hidessh/baru/-/raw/main/ceklim.sh"
 wget -O tendang "https://gitlab.com/hidessh/baru/-/raw/main/tendang.sh"
-wget -O clear-log "https://gitlab.com/hidessh/baru/-/raw/main/clear-log.sh"
-wget -O user-limit "https://gitlab.com/hidessh/baru/-/raw/main/user-limit.sh"
+#wget -O clear-log "https://gitlab.com/hidessh/baru/-/raw/main/clear-log.sh"
+#wget -O user-limit "https://gitlab.com/hidessh/baru/-/raw/main/user-limit.sh"
 
 #tambahan baru
 wget -O userdelexpired "https://gitlab.com/hidessh/baru/-/raw/main/userdelexpired.sh"
-wget -O autoreboot "https://gitlab.com/hidessh/baru/-/raw/main/autoreboot.sh"
+#wget -O autoreboot "https://gitlab.com/hidessh/baru/-/raw/main/autoreboot.sh"
 wget -O autoservice "https://gitlab.com/hidessh/baru/-/raw/main/autoservice.sh"
 
 
@@ -329,11 +329,11 @@ chmod +x tendang
 chmod +x ceklim
 chmod +x ram
 chmod +x renew
-chmod +x autoreboot
+#chmod +x autoreboot
 
 #auto reboot cronjob
-echo "0 5 * * * root clear-log && reboot" >> /etc/crontab
-echo "0 17 * * * root clear-log && reboot" >> /etc/crontab
+#echo "0 5 * * * root clear-log && reboot" >> /etc/crontab
+#echo "0 17 * * * root clear-log && reboot" >> /etc/crontab
 echo "50 * * * * root userdelexpired" >> /etc/crontab
 
 # finishing
@@ -371,9 +371,11 @@ apt autoremove -y
 
 
 #instalasi Websocket
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Websocket&ip=$IP"
 wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/websocket/hideinstall-websocket.sh && chmod +x hideinstall-websocket.sh && ./hideinstall-websocket.sh
 
 # finihsing
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Finalizing&ip=$IP"
 clear
 #installer OPH
 wget https://gitlab.com/hidessh/baru/-/raw/main/ohp.sh && chmod +x ohp.sh && ./ohp.sh
@@ -383,3 +385,4 @@ cd
 rm -rf hideinstall-websocket.sh
 rm -rf hidehost.sh
 rm -rf ohp.sh
+reboot

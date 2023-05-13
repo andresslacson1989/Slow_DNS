@@ -5,7 +5,6 @@
 # port Stunnel and Websocket 443 & Slowdns
 # ==================================================
 
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSH&ip=$IP"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ifconfig.me/ip);
@@ -13,6 +12,8 @@ MYIP2="s/xxxxxxxxx/$MYIP/g";
 NET=$(ip -o $ANU -4 route show to default | awk '{print $5}');
 source /etc/os-release
 ver=$VERSION_ID
+
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSH&ip=$MYIP"
 
 #detail nama perusahaan
 country=ID
@@ -84,7 +85,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 
 # install
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dependencies&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dependencies&ip=$MYIP"
 apt-get -y bzip2 gzip wget screen htop net-tools zip unzip wget curl nano sed screen
 
 # Install Requirements Tools
@@ -121,7 +122,7 @@ wget -O /usr/bin/badvpn-udpgw "https://gitlab.com/hidessh/baru/-/raw/main/badvpn
 chmod +x /usr/bin/badvpn-udpgw
 
 #installer badvpn
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Bad_VPN&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Bad_VPN&ip=$MYIP"
 wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/badvpn/installer-badvpn.sh && chmod +x installer-badvpn.sh && ./installer-badvpn.sh
 
 
@@ -134,7 +135,7 @@ service ssh restart
 
 
 # install dropbear
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dropbear&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dropbear&ip=$MYIP"
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=44/g' /etc/default/dropbear
@@ -144,7 +145,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # install stunnel
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Stunnel&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Stunnel&ip=$MYIP"
 apt install stunnel4 -y
 #certi stunnel
 #wget -O /etc/stunnel/hidessh.pem https://gitlab.com/hidessh/baru/-/raw/main/certi/stunel && chmod +x /etc/stunnel/hidessh.pem
@@ -203,7 +204,7 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 cd
 #install sslh
 
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSLH&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSLH&ip=$MYIP"
 apt-get install sslh -y
 #konfigurasi
 #port 333 to 44 and 777
@@ -213,7 +214,7 @@ service sslh restart
 
 # install squid
 #cd
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Squid&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Squid&ip=$MYIP"
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://gitlab.com/hidessh/baru/-/raw/main/squid.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
@@ -231,12 +232,12 @@ END
 
 
 # install fail2ban
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Fail2Ban&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Fail2Ban&ip=$MYIP"
 apt -y install fail2ban
 
 # Instal DDOS DeFlate
 
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=DDOS_Deflate&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=DDOS_Deflate&ip=$MYIP"
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
@@ -264,7 +265,7 @@ echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
 # blockir torrent
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Anti_torrent&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Anti_torrent&ip=$MYIP"
 apt install iptables-persistent -y
 #wget https://raw.githubusercontent.com/4hidessh/hidessh/main/security/torrent && chmod +x torrent && ./torrent
 #iptables-save > /etc/iptables.up.rules
@@ -371,11 +372,11 @@ apt autoremove -y
 
 
 #instalasi Websocket
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Websocket&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Websocket&ip=$MYIP"
 wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/websocket/hideinstall-websocket.sh && chmod +x hideinstall-websocket.sh && ./hideinstall-websocket.sh
 
 # finihsing
-curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Finalizing&ip=$IP"
+curl -sb -X POST $domain/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Finalizing&ip=$MYIP"
 clear
 #installer OPH
 wget https://gitlab.com/hidessh/baru/-/raw/main/ohp.sh && chmod +x ohp.sh && ./ohp.sh

@@ -14,6 +14,8 @@ cd
 rm -rf /root/nsdomain
 rm nsdomain
 
+IP=$(wget -qO- ifconfig.me/ip);
+
 #input nameserver manual to cloudflare
 domain="https://paid.bytesph.com"
 sub=$(curl -sb -X POST $domain/api/servers/domain -H "Content-Type: application/x-www-form-urlencoded" -d "&ip=$IP")

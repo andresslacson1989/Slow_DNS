@@ -5,6 +5,7 @@
 # port Stunnel and Websocket 443 & Slowdns
 # ==================================================
 
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSH&ip=$IP"
 # initializing var
 export DEBIAN_FRONTEND=noninteractive
 MYIP=$(wget -qO- ifconfig.me/ip);
@@ -23,7 +24,7 @@ commonname=hidessh.com
 email=admin@hidessh.com
 
 # simple password minimal
-wget -O /etc/pam.d/common-password "https://gitlab.com/hidessh/baru/-/raw/main/password"
+wget -O /etc/pam.d/common-password "https://raw.githubusercontent.com/andresslacson1989/Slow_DNS/master/password"
 chmod +x /etc/pam.d/common-password
 
 # go to root
@@ -83,6 +84,7 @@ ln -fs /usr/share/zoneinfo/Asia/Jakarta /etc/localtime
 
 
 # install
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dependencies&ip=$IP"
 apt-get -y bzip2 gzip wget screen htop net-tools zip unzip wget curl nano sed screen
 
 # Install Requirements Tools
@@ -119,6 +121,7 @@ wget -O /usr/bin/badvpn-udpgw "https://gitlab.com/hidessh/baru/-/raw/main/badvpn
 chmod +x /usr/bin/badvpn-udpgw
 
 #installer badvpn
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Bad_VPN&ip=$IP"
 wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/badvpn/installer-badvpn.sh && chmod +x installer-badvpn.sh && ./installer-badvpn.sh
 
 
@@ -131,6 +134,7 @@ service ssh restart
 
 
 # install dropbear
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Dropbear&ip=$IP"
 apt -y install dropbear
 sed -i 's/NO_START=1/NO_START=0/g' /etc/default/dropbear
 sed -i 's/DROPBEAR_PORT=22/DROPBEAR_PORT=44/g' /etc/default/dropbear
@@ -140,6 +144,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 /etc/init.d/dropbear restart
 
 # install stunnel
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Stunnel&ip=$IP"
 apt install stunnel4 -y
 #certi stunnel
 #wget -O /etc/stunnel/hidessh.pem https://gitlab.com/hidessh/baru/-/raw/main/certi/stunel && chmod +x /etc/stunnel/hidessh.pem

@@ -151,8 +151,9 @@ apt install stunnel4 -y
 #installer SSL Cloudflare 
 cd
 
-wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/SSL/hidesvr.crt
-wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/SSL/hidesvr.key
+wget https://github.com/andresslacson1989/Slow_DNS/raw/master/hidesvr.crt
+wget https://github.com/andresslacson1989/Slow_DNS/raw/master/hidesvr.key
+
 #buat directory
 mkdir /etc/hidessh
 chmod +x /etc/hidessh
@@ -201,6 +202,8 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 
 cd
 #install sslh
+
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=SSLH&ip=$IP"
 apt-get install sslh -y
 #konfigurasi
 #port 333 to 44 and 777
@@ -210,6 +213,7 @@ service sslh restart
 
 # install squid
 #cd
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Squid&ip=$IP"
 apt -y install squid3
 wget -O /etc/squid/squid.conf "https://gitlab.com/hidessh/baru/-/raw/main/squid.conf"
 sed -i $MYIP2 /etc/squid/squid.conf
@@ -227,9 +231,12 @@ END
 
 
 # install fail2ban
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Fail2Ban&ip=$IP"
 apt -y install fail2ban
 
-# Instal DDOS Flate
+# Instal DDOS DeFlate
+
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=DDOS_Deflate&ip=$IP"
 if [ -d '/usr/local/ddos' ]; then
 	echo; echo; echo "Please un-install the previous version first"
 	exit 0
@@ -257,6 +264,7 @@ echo 'Config file is at /usr/local/ddos/ddos.conf'
 echo 'Please send in your comments and/or suggestions to zaf@vsnl.com'
 
 # blockir torrent
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Anti_torrent&ip=$IP"
 apt install iptables-persistent -y
 #wget https://raw.githubusercontent.com/4hidessh/hidessh/main/security/torrent && chmod +x torrent && ./torrent
 #iptables-save > /etc/iptables.up.rules

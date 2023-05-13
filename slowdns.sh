@@ -1,10 +1,9 @@
 #!/bin/bash
-# Script  By nstaller slowdns
-# 2022 SLOWDNS
+# Script Slowdns
+# BytesPH AkoSiBytes
 # ===============================================
 
-
-#setting IPtables
+#setting IP Tables
 iptables -I INPUT -p udp --dport 5300 -j ACCEPT
 iptables -t nat -I PREROUTING -p udp --dport 53 -j REDIRECT --to-ports 5300
 netfilter-persistent save
@@ -16,19 +15,18 @@ rm -rf /root/nsdomain
 rm nsdomain
 
 #input nameserver manual to cloudflare
-read -rp "Masukkan domain: " -e domain
-
-read -rp "Masukkan Subdomain: " -e sub
+domain="https://paid.bytesph.com"
+sub=$(curl -sb -X POST $domain/api/servers/domain -H "Content-Type: application/x-www-form-urlencoded" -d "&ip=$IP")
 SUB_DOMAIN=${sub}.${domain}
 NS_DOMAIN=slowdns-${SUB_DOMAIN}
-echo $NS_DOMAIN > /root/nsdomain
+echo "$NS_DOMAIN" > /root/nsdomain
 
 nameserver=$(cat /root/nsdomain)
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Update&ip=$IP"
 apt update -y
 apt install -y python3 python3-dnslib net-tools
 apt install ncurses-utils -y
 apt install dnsutils -y
-#apt install golang -y
 apt install git -y
 apt install curl -y
 apt install wget -y
@@ -37,9 +35,7 @@ apt install screen -y
 apt install cron -y
 apt install iptables -y
 apt install -y git screen whois dropbear wget
-#apt install -y pwgen python php jq curl
 apt install -y sudo gnutls-bin
-#apt install -y mlocate dh-make libaudit-dev build-essential
 apt install -y dos2unix debconf-utils
 service cron reload
 service cron restart
@@ -52,7 +48,8 @@ sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/g' /etc/ssh/sshd_config
 service ssh restart
 service sshd restart
 
-#konfigurasi slowdns
+#configure slowdns
+curl -sb -X POST $DOMAIN/api/server/install -H "Content-Type: application/x-www-form-urlencoded" -d "status=Slow_DNS&ip=$IP"
 rm -rf /etc/slowdns
 mkdir -m 777 /etc/slowdns
 wget -q -O /etc/slowdns/server.key "https://raw.githubusercontent.com/fisabiliyusri/SLDNS/main/slowdns/server.key"

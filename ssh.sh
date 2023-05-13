@@ -119,7 +119,7 @@ wget -O /usr/bin/badvpn-udpgw "https://gitlab.com/hidessh/baru/-/raw/main/badvpn
 chmod +x /usr/bin/badvpn-udpgw
 
 #installer badvpn
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/badvpn/installer-badvpn.sh && chmod +x installer-badvpn.sh && ./installer-badvpn.sh
+wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/badvpn/installer-badvpn.sh && chmod +x installer-badvpn.sh && ./installer-badvpn.sh
 
 
 # setting port ssh
@@ -146,8 +146,8 @@ apt install stunnel4 -y
 #installer SSL Cloudflare 
 cd
 
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hidesvr.crt
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/SSL/hidesvr.key
+wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/SSL/hidesvr.crt
+wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/SSL/hidesvr.key
 #buat directory
 mkdir /etc/hidessh
 chmod +x /etc/hidessh
@@ -358,7 +358,7 @@ apt autoremove -y
 
 
 #instalasi Websocket
-wget https://raw.githubusercontent.com/hidessh99/projectku/main/websocket/hideinstall-websocket.sh && chmod +x hideinstall-websocket.sh && ./hideinstall-websocket.sh
+wget https://raw.githubusercontent.com/andresslacson1989/projectku/main/websocket/hideinstall-websocket.sh && chmod +x hideinstall-websocket.sh && ./hideinstall-websocket.sh
 
 # finihsing
 clear
